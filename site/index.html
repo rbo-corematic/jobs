@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>US Job Market Visualizer</title>
+<title>Job Market Visualizer</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -166,6 +166,30 @@ body {
   background: rgba(255,255,255,0.04);
 }
 
+#regionSelect {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  color: var(--fg);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 26px;
+}
+#regionSelect:hover {
+  border-color: rgba(255,255,255,0.3);
+}
+#regionSelect option {
+  background: var(--bg2);
+  color: var(--fg);
+}
+
 .gradient-legend {
   display: flex;
   align-items: center;
@@ -209,8 +233,11 @@ canvas#canvas {
 <div id="wrapper">
 <div id="header">
   <div class="intro">
-    <h1>US Job Market Visualizer <a href="https://github.com/karpathy/jobs">GitHub</a></h1>
-    <p>This is a research tool that visualizes <b>342 occupations</b> from the <a href="https://www.bls.gov/ooh/">Bureau of Labor Statistics Occupational Outlook Handbook</a>, covering <b>143M jobs</b> across the US economy. Each rectangle's <b>area</b> is proportional to total employment. <b>Color</b> shows the selected metric &mdash; toggle between BLS projected growth outlook, median pay, education requirements, and AI exposure. Click any tile to view its full BLS page. This is not a report, a paper, or a serious economic publication &mdash; it is a development tool for exploring BLS data visually.</p>
+    <h1><span id="titleRegion">US</span> Job Market Visualizer
+      <select id="regionSelect"><option value="us">USA</option></select>
+      <a href="https://github.com/karpathy/jobs">GitHub</a>
+    </h1>
+    <p id="introDesc">This is a research tool that visualizes <b>342 occupations</b> from the <a href="https://www.bls.gov/ooh/">Bureau of Labor Statistics Occupational Outlook Handbook</a>, covering <b>143M jobs</b> across the US economy. Each rectangle's <b>area</b> is proportional to total employment. <b>Color</b> shows the selected metric &mdash; toggle between BLS projected growth outlook, median pay, education requirements, and AI exposure. Click any tile to view its full BLS page. This is not a report, a paper, or a serious economic publication &mdash; it is a development tool for exploring BLS data visually.</p>
     <p><b>LLM-powered coloring:</b> The <a href="https://github.com/karpathy/jobs">source code</a> includes scrapers, parsers, and a pipeline for writing custom LLM prompts to score and color occupations by any criteria. You write a prompt, the LLM scores each occupation, and the treemap colors accordingly. The "Digital AI Exposure" option is one example &mdash; it estimates how much current AI (which is primarily digital) will reshape each occupation. But you could write a different prompt for any question &mdash; e.g. exposure to humanoid robotics, offshoring risk, climate impact &mdash; and re-run the pipeline to get a different coloring.</p>
     <details>
       <summary>View the Digital AI Exposure scoring prompt (example)</summary>
@@ -343,6 +370,14 @@ function exposureColor(v, a) {
   return greenRedCSS(v / 10, a);
 }
 
+function categoryColor(d, alpha) {
+  // Simple hash-based color for category when no metric layers available
+  const cats = [...new Set(data.map(x => x.category))].sort();
+  const idx = cats.indexOf(d.category);
+  const hue = (idx * 137.5) % 360;
+  return `hsla(${hue}, 40%, 45%, ${alpha})`;
+}
+
 function tileColorCSS(d, alpha) {
   if (colorMode === "exposure") return exposureColor(d.exposure, alpha);
   if (colorMode === "outlook") return outlookColor(d.outlook, alpha);
@@ -350,6 +385,7 @@ function tileColorCSS(d, alpha) {
   if (colorMode === "education") {
     return eduColor(EDU_LEVELS.indexOf(d.education), alpha);
   }
+  if (colorMode === "category") return categoryColor(d, alpha);
   return `rgba(128,128,128,${alpha})`;
 }
 
@@ -378,6 +414,9 @@ function tileSubInfo(r) {
       "Doctoral or professional degree": "Doctoral/Prof",
     }[r.education] || "";
     return short + (r.jobs ? " \u00b7 " + formatNumber(r.jobs) + " jobs" : "");
+  }
+  if (colorMode === "category") {
+    return (r.category || "") + (r.jobs ? " \u00b7 " + formatNumber(r.jobs) + " jobs" : "");
   }
   return "";
 }
@@ -541,6 +580,8 @@ function tooltipHighlight(d) {
     const idx = EDU_LEVELS.indexOf(edu);
     const color = idx >= 0 ? eduColor(idx, 1) : "var(--fg)";
     return `<span style="color:${color};font-weight:600;">Education: ${edu || '\u2014'}</span>`;
+  } else if (colorMode === "category") {
+    return `<span style="font-weight:600;">${d.category || '\u2014'}</span>`;
   }
   return "";
 }
@@ -624,12 +665,20 @@ function renderHbars(items) {
 
 function updateStats() {
   const totalJobs = data.reduce((s, d) => s + (d.jobs || 0), 0);
-  document.getElementById("statTotalJobs").textContent = (totalJobs / 1e6).toFixed(0) + "M";
+  const jobsStr = totalJobs >= 1e6 ? (totalJobs / 1e6).toFixed(0) + "M" : (totalJobs / 1e3).toFixed(0) + "K";
+  document.getElementById("statTotalJobs").textContent = jobsStr;
+
+  // Clear optional blocks
+  for (let i = 2; i <= 8; i++) {
+    const el = document.getElementById("block" + i);
+    if (el) el.innerHTML = "";
+  }
 
   if (colorMode === "outlook") updateOutlookStats(totalJobs);
   else if (colorMode === "pay") updatePayStats(totalJobs);
   else if (colorMode === "education") updateEducationStats(totalJobs);
-  else updateExposureStats(totalJobs);
+  else if (colorMode === "exposure") updateExposureStats(totalJobs);
+  // category mode: just show total jobs, no detailed stats
 }
 
 function updateOutlookStats(totalJobs) {
@@ -865,11 +914,18 @@ const LEGEND_CONFIG = {
   outlook:   { low: "Declining", high: "Growing" },
   pay:       { low: "$25K", high: "$250K" },
   education: { low: "No degree", high: "Doctoral" },
+  category:  { low: "", high: "" },
 };
 
 function drawGradientLegend() {
   const c = document.getElementById("gradientLegend");
   const gctx = c.getContext("2d");
+  const legendEl = document.querySelector(".gradient-legend");
+  if (colorMode === "category") {
+    legendEl.style.display = "none";
+    return;
+  }
+  legendEl.style.display = "";
   for (let x = 0; x < 80; x++) {
     const t = x / 79;
     gctx.fillStyle = colorMode === "exposure" ? greenRedCSS(t, 1) : greenRedCSS(1 - t, 1);
@@ -895,15 +951,126 @@ document.getElementById("colorToggle").addEventListener("click", (e) => {
   requestAnimationFrame(resize);
 });
 
+// ── Region management ──────────────────────────────────────────────────
+
+let currentRegion = "us";
+let regionsManifest = {};
+
+function hasField(field) {
+  return data.some(d => d[field] != null);
+}
+
+function updateLayerButtons() {
+  const hasPay = hasField("pay");
+  const hasOutlook = hasField("outlook");
+  const hasEdu = data.some(d => d.education);
+  const hasExposure = hasField("exposure");
+
+  document.querySelector('[data-mode="pay"]').style.display = hasPay ? "" : "none";
+  document.querySelector('[data-mode="outlook"]').style.display = hasOutlook ? "" : "none";
+  document.querySelector('[data-mode="education"]').style.display = hasEdu ? "" : "none";
+  document.querySelector('[data-mode="exposure"]').style.display = hasExposure ? "" : "none";
+
+  // If current mode is unavailable, switch to first available (fallback: category)
+  const available = [];
+  if (hasOutlook) available.push("outlook");
+  if (hasPay) available.push("pay");
+  if (hasEdu) available.push("education");
+  if (hasExposure) available.push("exposure");
+  available.push("category"); // always available as fallback
+
+  if (!available.includes(colorMode)) {
+    colorMode = available[0];
+  }
+
+  // Show/hide category button (only when no other layers available)
+  let catBtn = document.querySelector('[data-mode="category"]');
+  if (!catBtn) {
+    catBtn = document.createElement("button");
+    catBtn.dataset.mode = "category";
+    catBtn.textContent = "Category";
+    document.getElementById("colorToggle").appendChild(catBtn);
+  }
+  catBtn.style.display = (!hasOutlook && !hasPay && !hasEdu && !hasExposure) ? "" : "none";
+
+  // Update active button
+  document.querySelectorAll("#colorToggle button").forEach(b => {
+    b.classList.toggle("active", b.dataset.mode === colorMode);
+  });
+}
+
+function updateIntroText() {
+  const info = regionsManifest[currentRegion];
+  const el = document.getElementById("introDesc");
+  if (!info) return;
+
+  const count = info.count || data.length;
+  const totalJobs = info.total_jobs || data.reduce((s, d) => s + (d.jobs || 0), 0);
+  const jobsStr = totalJobs >= 1e6 ? (totalJobs / 1e6).toFixed(0) + "M" : (totalJobs / 1e3).toFixed(0) + "K";
+
+  if (currentRegion === "us") {
+    el.innerHTML = `This is a research tool that visualizes <b>${count} occupations</b> from the <a href="${info.source_url}">Bureau of Labor Statistics Occupational Outlook Handbook</a>, covering <b>${jobsStr} jobs</b> across the US economy. Each rectangle's <b>area</b> is proportional to total employment. <b>Color</b> shows the selected metric. Click any tile to view its full BLS page.`;
+  } else {
+    el.innerHTML = `This is a research tool that visualizes <b>${count} occupation groups</b> from <a href="${info.source_url}">Eurostat</a> (ISCO-08 classification), covering <b>${jobsStr} jobs</b> in ${info.name}. Each rectangle's <b>area</b> is proportional to total employment. <b>Color</b> shows the selected metric. Click any tile for details.`;
+  }
+
+  document.getElementById("titleRegion").textContent = info.short_name || info.name;
+}
+
+function loadRegionData(regionId) {
+  const info = regionsManifest[regionId];
+  if (!info) return;
+
+  currentRegion = regionId;
+  const file = info.file;
+
+  fetch(file)
+    .then(r => r.json())
+    .then(d => {
+      data = d;
+      updateLayerButtons();
+      updateIntroText();
+      updateStats();
+      drawGradientLegend();
+      resize();
+    });
+}
+
+// Region selector
+document.getElementById("regionSelect").addEventListener("change", (e) => {
+  loadRegionData(e.target.value);
+});
+
 // ── Load ───────────────────────────────────────────────────────────────
 
-fetch("data.json")
-  .then(r => r.json())
-  .then(d => {
-    data = d;
-    updateStats();
-    drawGradientLegend();
-    resize();
+// Load regions manifest, then populate dropdown and load default
+fetch("regions.json")
+  .then(r => r.ok ? r.json() : {})
+  .then(manifest => {
+    regionsManifest = manifest;
+    const select = document.getElementById("regionSelect");
+    select.innerHTML = "";
+    for (const [id, info] of Object.entries(manifest)) {
+      const opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = info.short_name || info.name;
+      select.appendChild(opt);
+    }
+    // Default to US if available, otherwise first
+    const defaultRegion = manifest.us ? "us" : Object.keys(manifest)[0];
+    select.value = defaultRegion;
+    loadRegionData(defaultRegion);
+  })
+  .catch(() => {
+    // Fallback: no manifest, just load data.json directly (backward-compatible)
+    fetch("data.json")
+      .then(r => r.json())
+      .then(d => {
+        data = d;
+        updateStats();
+        drawGradientLegend();
+        resize();
+      });
   });
 
 window.addEventListener("resize", resize);

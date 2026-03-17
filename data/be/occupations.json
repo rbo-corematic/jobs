@@ -1,0 +1,402 @@
+[
+  {
+    "title": "Business and administration associate professionals",
+    "isco_code": "33",
+    "slug": "oc33",
+    "category": "Technicians and associate professionals",
+    "jobs": 358200,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C33"
+  },
+  {
+    "title": "Teaching professionals",
+    "isco_code": "23",
+    "slug": "oc23",
+    "category": "Professionals",
+    "jobs": 355400,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C23"
+  },
+  {
+    "title": "Sales workers",
+    "isco_code": "52",
+    "slug": "oc52",
+    "category": "Service and sales workers",
+    "jobs": 268100,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C52"
+  },
+  {
+    "title": "Business and administration professionals",
+    "isco_code": "24",
+    "slug": "oc24",
+    "category": "Professionals",
+    "jobs": 255400,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C24"
+  },
+  {
+    "title": "Cleaners and helpers",
+    "isco_code": "91",
+    "slug": "oc91",
+    "category": "Elementary occupations",
+    "jobs": 249900,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C91"
+  },
+  {
+    "title": "General and keyboard clerks",
+    "isco_code": "41",
+    "slug": "oc41",
+    "category": "Clerical support workers",
+    "jobs": 233500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C41"
+  },
+  {
+    "title": "Health professionals",
+    "isco_code": "22",
+    "slug": "oc22",
+    "category": "Professionals",
+    "jobs": 232500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C22"
+  },
+  {
+    "title": "Numerical and material recording clerks",
+    "isco_code": "43",
+    "slug": "oc43",
+    "category": "Clerical support workers",
+    "jobs": 211100,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C43"
+  },
+  {
+    "title": "Building and related trades workers, excluding electricians",
+    "isco_code": "71",
+    "slug": "oc71",
+    "category": "Craft and related trades workers",
+    "jobs": 204600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C71"
+  },
+  {
+    "title": "Legal, social and cultural professionals",
+    "isco_code": "26",
+    "slug": "oc26",
+    "category": "Professionals",
+    "jobs": 189500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C26"
+  },
+  {
+    "title": "Information and communications technology professionals",
+    "isco_code": "25",
+    "slug": "oc25",
+    "category": "Professionals",
+    "jobs": 182600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C25"
+  },
+  {
+    "title": "Science and engineering professionals",
+    "isco_code": "21",
+    "slug": "oc21",
+    "category": "Professionals",
+    "jobs": 179400,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C21"
+  },
+  {
+    "title": "Personal service workers",
+    "isco_code": "51",
+    "slug": "oc51",
+    "category": "Service and sales workers",
+    "jobs": 177900,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C51"
+  },
+  {
+    "title": "Drivers and mobile plant operators",
+    "isco_code": "83",
+    "slug": "oc83",
+    "category": "Plant and machine operators and assemblers",
+    "jobs": 173200,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C83"
+  },
+  {
+    "title": "Administrative and commercial managers",
+    "isco_code": "12",
+    "slug": "oc12",
+    "category": "Managers",
+    "jobs": 168500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C12"
+  },
+  {
+    "title": "Personal care workers",
+    "isco_code": "53",
+    "slug": "oc53",
+    "category": "Service and sales workers",
+    "jobs": 167200,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C53"
+  },
+  {
+    "title": "Science and engineering associate professionals",
+    "isco_code": "31",
+    "slug": "oc31",
+    "category": "Technicians and associate professionals",
+    "jobs": 161000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C31"
+  },
+  {
+    "title": "Health associate professionals",
+    "isco_code": "32",
+    "slug": "oc32",
+    "category": "Technicians and associate professionals",
+    "jobs": 127300,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C32"
+  },
+  {
+    "title": "Production and specialised services managers",
+    "isco_code": "13",
+    "slug": "oc13",
+    "category": "Managers",
+    "jobs": 124400,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C13"
+  },
+  {
+    "title": "Metal, machinery and related trades workers",
+    "isco_code": "72",
+    "slug": "oc72",
+    "category": "Craft and related trades workers",
+    "jobs": 115400,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C72"
+  },
+  {
+    "title": "Labourers in mining, construction, manufacturing and transport",
+    "isco_code": "93",
+    "slug": "oc93",
+    "category": "Elementary occupations",
+    "jobs": 102300,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C93"
+  },
+  {
+    "title": "Stationary plant and machine operators",
+    "isco_code": "81",
+    "slug": "oc81",
+    "category": "Plant and machine operators and assemblers",
+    "jobs": 86500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C81"
+  },
+  {
+    "title": "Legal, social, cultural and related associate professionals",
+    "isco_code": "34",
+    "slug": "oc34",
+    "category": "Technicians and associate professionals",
+    "jobs": 85700,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C34"
+  },
+  {
+    "title": "Electrical and electronic trades workers",
+    "isco_code": "74",
+    "slug": "oc74",
+    "category": "Craft and related trades workers",
+    "jobs": 67000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C74"
+  },
+  {
+    "title": "Customer services clerks",
+    "isco_code": "42",
+    "slug": "oc42",
+    "category": "Clerical support workers",
+    "jobs": 66000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C42"
+  },
+  {
+    "title": "Food processing, wood working, garment and other craft and related trades workers",
+    "isco_code": "75",
+    "slug": "oc75",
+    "category": "Craft and related trades workers",
+    "jobs": 61000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C75"
+  },
+  {
+    "title": "Chief executives, senior officials and legislators",
+    "isco_code": "11",
+    "slug": "oc11",
+    "category": "Managers",
+    "jobs": 57000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C11"
+  },
+  {
+    "title": "Protective services workers",
+    "isco_code": "54",
+    "slug": "oc54",
+    "category": "Service and sales workers",
+    "jobs": 55900,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C54"
+  },
+  {
+    "title": "Market-oriented skilled agricultural workers",
+    "isco_code": "61",
+    "slug": "oc61",
+    "category": "Skilled agricultural, forestry and fishery workers",
+    "jobs": 55600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C61"
+  },
+  {
+    "title": "Other clerical support workers",
+    "isco_code": "44",
+    "slug": "oc44",
+    "category": "Clerical support workers",
+    "jobs": 53600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C44"
+  },
+  {
+    "title": "Hospitality, retail and other services managers",
+    "isco_code": "14",
+    "slug": "oc14",
+    "category": "Managers",
+    "jobs": 52600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C14"
+  },
+  {
+    "title": "Food preparation assistants",
+    "isco_code": "94",
+    "slug": "oc94",
+    "category": "Elementary occupations",
+    "jobs": 42500,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C94"
+  },
+  {
+    "title": "Refuse workers and other elementary workers",
+    "isco_code": "96",
+    "slug": "oc96",
+    "category": "Elementary occupations",
+    "jobs": 40200,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C96"
+  },
+  {
+    "title": "Information and communications technicians",
+    "isco_code": "35",
+    "slug": "oc35",
+    "category": "Technicians and associate professionals",
+    "jobs": 23000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C35"
+  },
+  {
+    "title": "Agricultural, forestry and fishery labourers",
+    "isco_code": "92",
+    "slug": "oc92",
+    "category": "Elementary occupations",
+    "jobs": 22600,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C92"
+  },
+  {
+    "title": "Assemblers",
+    "isco_code": "82",
+    "slug": "oc82",
+    "category": "Plant and machine operators and assemblers",
+    "jobs": 22200,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C82"
+  },
+  {
+    "title": "Handicraft and printing workers",
+    "isco_code": "73",
+    "slug": "oc73",
+    "category": "Craft and related trades workers",
+    "jobs": 14700,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C73"
+  },
+  {
+    "title": "Armed forces occupations, other ranks",
+    "isco_code": "03",
+    "slug": "oc03",
+    "category": "Armed forces occupations",
+    "jobs": 12000,
+    "jobs_year": "2024",
+    "reliability": "",
+    "esco_uri": "http://data.europa.eu/esco/isco/C03"
+  },
+  {
+    "title": "Non-commissioned armed forces officers",
+    "isco_code": "02",
+    "slug": "oc02",
+    "category": "Armed forces occupations",
+    "jobs": 4000,
+    "jobs_year": "2024",
+    "reliability": "u",
+    "esco_uri": "http://data.europa.eu/esco/isco/C02"
+  },
+  {
+    "title": "Commissioned armed forces officers",
+    "isco_code": "01",
+    "slug": "oc01",
+    "category": "Armed forces occupations",
+    "jobs": 3300,
+    "jobs_year": "2024",
+    "reliability": "u",
+    "esco_uri": "http://data.europa.eu/esco/isco/C01"
+  }
+]
