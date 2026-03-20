@@ -1,14 +1,16 @@
 """
 Score each occupation's AI exposure using an LLM via OpenRouter.
 
-Reads Markdown descriptions from pages/, sends each to an LLM with a scoring
-rubric, and collects structured scores. Results are cached incrementally to
-scores.json so the script can be resumed if interrupted.
+Reads Markdown descriptions from pages/ (US) or data/<region>/pages/ (EU/BE),
+sends each to an LLM with a scoring rubric, and collects structured scores.
+Results are cached incrementally so the script can be resumed if interrupted.
 
 Usage:
-    uv run python score.py
+    uv run python score.py                           # score US (default)
+    uv run python score.py --region be               # score Belgium
+    uv run python score.py --region eu               # score EU
     uv run python score.py --model google/gemini-3-flash-preview
-    uv run python score.py --start 0 --end 10   # test on first 10
+    uv run python score.py --start 0 --end 10        # test on first 10
 """
 
 import argparse
@@ -18,10 +20,11 @@ import time
 import httpx
 from dotenv import load_dotenv
 
+from countries import REGIONS
+
 load_dotenv()
 
 DEFAULT_MODEL = "google/gemini-3-flash-preview"
-OUTPUT_FILE = "scores.json"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 SYSTEM_PROMPT = """\
@@ -116,8 +119,23 @@ def score_occupation(client, text, model):
     return json.loads(content)
 
 
+def resolve_paths(region_id):
+    """Return (occupations_path, pages_dir, scores_path) for a given region."""
+    if region_id == "us":
+        return "occupations.json", "pages", "scores.json"
+    region = REGIONS[region_id]
+    data_dir = region["data_dir"]
+    return (
+        os.path.join(data_dir, "occupations.json"),
+        os.path.join(data_dir, "pages"),
+        os.path.join(data_dir, "scores.json"),
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--region", default="us", choices=list(REGIONS.keys()),
+                        help="Region to score (default: us)")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--end", type=int, default=None)
@@ -126,19 +144,21 @@ def main():
                         help="Re-score even if already cached")
     args = parser.parse_args()
 
-    with open("occupations.json") as f:
+    occ_path, pages_dir, output_file = resolve_paths(args.region)
+
+    with open(occ_path) as f:
         occupations = json.load(f)
 
     subset = occupations[args.start:args.end]
 
     # Load existing scores
     scores = {}
-    if os.path.exists(OUTPUT_FILE) and not args.force:
-        with open(OUTPUT_FILE) as f:
+    if os.path.exists(output_file) and not args.force:
+        with open(output_file) as f:
             for entry in json.load(f):
                 scores[entry["slug"]] = entry
 
-    print(f"Scoring {len(subset)} occupations with {args.model}")
+    print(f"Scoring {len(subset)} occupations ({args.region.upper()}) with {args.model}")
     print(f"Already cached: {len(scores)}")
 
     errors = []
@@ -150,7 +170,7 @@ def main():
         if slug in scores:
             continue
 
-        md_path = f"pages/{slug}.md"
+        md_path = os.path.join(pages_dir, f"{slug}.md")
         if not os.path.exists(md_path):
             print(f"  [{i+1}] SKIP {slug} (no markdown)")
             continue
@@ -158,13 +178,14 @@ def main():
         with open(md_path) as f:
             text = f.read()
 
-        print(f"  [{i+1}/{len(subset)}] {occ['title']}...", end=" ", flush=True)
+        title = occ["title"]
+        print(f"  [{i+1}/{len(subset)}] {title}...", end=" ", flush=True)
 
         try:
             result = score_occupation(client, text, args.model)
             scores[slug] = {
                 "slug": slug,
-                "title": occ["title"],
+                "title": title,
                 **result,
             }
             print(f"exposure={result['exposure']}")
@@ -173,7 +194,7 @@ def main():
             errors.append(slug)
 
         # Save after each one (incremental checkpoint)
-        with open(OUTPUT_FILE, "w") as f:
+        with open(output_file, "w") as f:
             json.dump(list(scores.values()), f, indent=2)
 
         if i < len(subset) - 1:

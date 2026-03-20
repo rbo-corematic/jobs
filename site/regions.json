@@ -1,0 +1,29 @@
+{
+  "us": {
+    "name": "United States",
+    "short_name": "USA",
+    "file": "data.json",
+    "description": "342 occupations from the Bureau of Labor Statistics Occupational Outlook Handbook",
+    "source_url": "https://www.bls.gov/ooh/",
+    "count": 342,
+    "total_jobs": 143066500
+  },
+  "be": {
+    "name": "Belgium",
+    "short_name": "Belgium",
+    "file": "data_be.json",
+    "description": "Occupations from Eurostat Labour Force Survey (ISCO-08)",
+    "source_url": "https://ec.europa.eu/eurostat/databrowser/view/lfsa_egai2d/default/table",
+    "count": 40,
+    "total_jobs": 5062800
+  },
+  "eu": {
+    "name": "European Union",
+    "short_name": "EU",
+    "file": "data_eu.json",
+    "description": "Occupations from Eurostat Labour Force Survey (ISCO-08), EU-27 aggregate",
+    "source_url": "https://ec.europa.eu/eurostat/databrowser/view/lfsa_egai2d/default/table",
+    "count": 43,
+    "total_jobs": 205984600
+  }
+}
